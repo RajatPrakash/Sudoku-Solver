@@ -11,6 +11,29 @@ board = [
 ]
 
 
+# Checking the Eligibility of inserted number on each empty box
+def valid_number(board, num, pos):
+    # checking for row
+    for i in range(len(board[0])):
+        if board[pos[0]][i] == num and pos[1] == i:
+            return False
+
+    # checking for columns
+    for i in range(len(board)):
+        if board[pos[1]][i] == num and pos[0] == i:
+            return False
+
+    # checking the 3X3 Cube for Existence
+    x_path = pos[1]//3  # taking column values
+    y_path = pos[0]//3  # taking row values
+    for i in range(y_path*3,y_path*3+3):
+        for j in range(x_path*3, x_path*3+3):
+            if board[i][j] == num and (i,j) != num:
+                return False
+
+    return True
+
+
 def print_board(board):
     for i in range(len(board)):
         if i % 3 == 0 and i != 0:
@@ -21,7 +44,14 @@ def print_board(board):
             if j == 8:
                 print(board[i][j])
             else:
-                print(str(board[i][j])+' ', end="")
+                print(str(board[i][j]) + ' ', end="")
+
+
+def find_empty(board):
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if board[i][j] == 0:
+                return (i, j)  # row , column
 
 
 print_board(board)
